@@ -1,5 +1,9 @@
 ﻿<div align="center">
 
+![主界面](screenshots/01-main.png)
+
+
+
 # 🌟 光照超级备忘录
 
 *一款轻量、高效的桌面任务管理与CRM工具*
