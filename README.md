@@ -64,7 +64,7 @@
 
 1. 克隆仓库：
 
-git clone https://github.com/你的用户名/super-memo.git
+git clone https://github.com/zhanglei13880264505-png/super-memo.git
 cd super-memo
 
 
