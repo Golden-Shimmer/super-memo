@@ -28,5 +28,6 @@ Thumbs.db
 
 # Output
 *.spec
+!超级备忘录.spec
 *.exe
 *.log

@@ -1,4 +1,4 @@
-import sys, sqlite3, os, ctypes, re, csv
+import sys, sqlite3, os, ctypes, re, csv, locale
 from datetime import datetime, timedelta
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
@@ -19,6 +19,40 @@ QDateEdit::down-arrow { image: none; width: 0; height: 0; border-left: 6px solid
 QTimeEdit::down-arrow { image: none; width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 8px solid #07c160; margin-right: 8px; }
 QDateEdit::up-arrow, QTimeEdit::up-arrow { image: none; }
 '''
+
+
+def resource_path(*parts):
+    base = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base, *parts)
+
+
+def setup_chinese_font(app):
+    try:
+        locale.setlocale(locale.LC_ALL, "")
+    except locale.Error:
+        pass
+
+    fonts_dir = resource_path("assets", "fonts")
+    if os.path.isdir(fonts_dir):
+        for name in os.listdir(fonts_dir):
+            if name.lower().endswith((".ttf", ".ttc", ".otf")):
+                QFontDatabase.addApplicationFont(os.path.join(fonts_dir, name))
+
+    families = set(QFontDatabase().families())
+    preferred = [
+        "Noto Sans CJK SC",
+        "Noto Sans SC",
+        "Microsoft YaHei UI",
+        "Microsoft YaHei",
+        "SimHei",
+        "SimSun",
+        "DengXian",
+        "Arial Unicode MS",
+    ]
+    family = next((item for item in preferred if item in families), app.font().family())
+    font = QFont(family, 14)
+    font.setStyleStrategy(QFont.PreferAntialias | QFont.PreferQuality)
+    app.setFont(font)
 
 
 class ClickableDateEdit(QDateEdit):
@@ -990,9 +1024,7 @@ class MW(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     app.setStyle("Fusion")
-    font = QFont("Microsoft YaHei", 14)
-    font.setStyleStrategy(QFont.PreferAntialias)
-    app.setFont(font)
+    setup_chinese_font(app)
     app.setStyleSheet(CAL_POPUP_STYLE)
     w = MW(); w.show()
     sys.excepthook = lambda t, v, tb: QMessageBox.critical(None, "错误", f"程序异常:\n{str(v)}")

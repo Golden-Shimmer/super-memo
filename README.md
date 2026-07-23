@@ -54,6 +54,10 @@
 
 ## 🚀 快速开始 / Quick Start
 
+### 直接下载 / Direct Download
+
+Windows 用户可以直接下载并运行：[超级备忘录.exe](dist/超级备忘录.exe?raw=1)
+
 ### 环境要求 / Requirements
 
 - Python 3.8+
